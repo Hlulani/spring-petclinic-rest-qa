@@ -87,6 +87,9 @@ The tests are organized in the `cypress/e2e/` folder and cover the following fea
 
 - **Vet Tests**: `cypress/e2e/vet/`
   - Create, Update, Get, and Delete vet operations.
+ 
+- **Pet Type Tests**: `cypress/e2e/pet-types/`
+  - Create, Update, Get, and Delete vet operations.
 
 ---
 
