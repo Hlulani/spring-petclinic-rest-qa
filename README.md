@@ -1,3 +1,5 @@
+markdown
+Copy code
 # PetClinic Test Automation
 
 This project contains automated tests for the PetClinic application using Cypress. The tests cover various functionalities of the PetClinic API, including specialties, pet owners, and vets.
@@ -7,39 +9,7 @@ This project contains automated tests for the PetClinic application using Cypres
 - [Project Setup](#project-setup)
 - [Running the Tests](#running-the-tests)
 - [Test Structure](#test-structure)
-- [Additional Information](#additional-information)
-
----
-
-## Project Setup
-
-### Prerequisites
-
-Ensure that you have the following installed on your machine:
-
-- [Node.js](https://nodejs.org/) (v12.x or higher)
-- [npm](https://www.npmjs.com/) (comes with Node.js)
-- [Cypress](https://www.cypress.io/)
-
-### Installation
-
-1. Clone the repository:
-
-    ```bash
-    git clone https://github.com/Hlulani/spring-petclinic-rest-qa.git
-    ```
-
-2. Navigate into the project directory:
-
-    ```bash# PetClinic Test Automation
-
-This project contains automated tests for the PetClinic application using Cypress. The tests cover various functionalities of the PetClinic API, including specialties, pet owners, and vets.
-
-## Table of Contents
-
-- [Project Setup](#project-setup)
-- [Running the Tests](#running-the-tests)
-- [Test Structure](#test-structure)
+- [GitHub Actions](#github-actions)
 - [Additional Information](#additional-information)
 
 ---
@@ -58,36 +28,8 @@ Additionally, ensure that the **PetClinic backend is running** on `http://localh
 
 ```bash
 ./mvnw spring-boot:run
-
-    cd petclinic-test-automation
-    ```
-
-3. Install the project dependencies:
-
-    ```bash
-    npm install
-    ```
-
-### Cypress Configuration
-
-Make sure Cypress is properly set up by verifying the `cypress.config.ts` file is in place and configured for your environment.
-
-If Cypress configuration is missing or incorrect, refer to [Cypress Docs](https://docs.cypress.io) for more details on setting up.
-
----
-
-## Running the Tests
-
-### Run All Tests in Headless Mode
-
-To run the tests without opening the Cypress UI (headless mode):
-
-```bash
-npx cypress run
-
-
 Installation
-Clone the repository:
+Clone the repository: ```
 
 bash
 Copy code
@@ -96,18 +38,15 @@ Navigate into the project directory:
 
 bash
 Copy code
-cd petclinic-test-automation
+cd spring-petclinic-rest-qa
 Install the project dependencies:
 
-bash
-Copy code
+
 npm install
 Cypress Configuration
 Make sure Cypress is properly set up by verifying the cypress.config.ts file is in place and configured for your environment.
 
 If Cypress configuration is missing or incorrect, refer to Cypress Docs for more details on setting up.
-
-----
 
 Running the Tests
 Ensure Backend is Running
@@ -153,3 +92,64 @@ Create, Update, Get, and Delete pet owner operations.
 Vet Tests: cypress/e2e/vet/
 
 Create, Update, Get, and Delete vet operations.
+GitHub Actions
+This project uses GitHub Actions for Continuous Integration (CI) to automatically run the Cypress tests when code is pushed or pull requests are opened.
+
+GitHub Actions Setup
+A workflow file named cypress.yml is located in .github/workflows/. It is configured to:
+
+Run the tests in headless mode on push and pull request events for the main branch.
+If you want to modify or customize the workflow, you can find it at .github/workflows/cypress.yml.
+
+Here’s a summary of the workflow:
+
+yaml
+Copy code
+name: Cypress Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Cypress tests
+        run: npx cypress run --headless
+        env:
+          # If your tests require environment variables
+          CYPRESS_BASE_URL: "http://localhost:9966/petclinic"
+          
+To view the CI results, navigate to the Actions tab in the repository on GitHub.
+
+Additional Information
+Cypress Documentation
+For more information on Cypress, visit the official documentation.
+
+API Documentation
+Ensure that the PetClinic API is running and accessible at the expected base URL http://localhost:9966/petclinic. If you're testing locally, make sure the server is running:
+
+bash
+Copy code
+./mvnw spring-boot:run
