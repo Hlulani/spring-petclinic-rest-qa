@@ -13,8 +13,8 @@ This project contains automated tests for the PetClinic application using Cypres
 ---
 ## Important repos to run before running this project:
 Pet Clinic Resources
-• Frontend Repository: [https://github.com/spring-petclinic/spring-petclinic-angular]
-• Backend Repository: [https://github.com/spring-petclinic/spring-petclinic-rest]
+ - Frontend Repository: [https://github.com/spring-petclinic/spring-petclinic-angular]
+ - Backend Repository: [https://github.com/spring-petclinic/spring-petclinic-rest]
 
 ## Project Setup
 
